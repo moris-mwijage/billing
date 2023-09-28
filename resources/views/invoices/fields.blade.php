@@ -67,6 +67,17 @@
             @endforeach
         </select>
     </div>
+    <div class="col-lg-6 col-sm-12 mb-5">
+        {{ Form::label('previous_meter_count', __('messages.invoice.previous_meter_count') . ':', ['class' => 'form-label mb-3']) }}
+        {{ Form::number('previous_meter_count', null, ['class' => 'form-control', 'id' => 'previous_meter_count', 'autocomplete' => 'off', 'min' => 1]) }}
+    </div>
+    
+    <!-- Add "Current Meter Count" Field -->
+    <div class="col-lg-6 col-sm-12 mb-5">
+        {{ Form::label('current_meter_count', __('messages.invoice.current_meter_count') . ':', ['class' => 'form-label mb-3']) }}
+        {{ Form::number('current_meter_count', null, ['class' => 'form-control', 'id' => 'current_meter_count', 'autocomplete' => 'off', 'min' => 1]) }}
+    </div>
+    
     <div class="mb-5 col-lg-6 col-sm-12 mt-8">
         <label class="form-check form-switch form-check-custom mt-3">
             <input class="form-check-input recurring-status" type="checkbox" name="recurring_status"

@@ -41,4 +41,5 @@
     {{ Form::hidden('thousand_separator',getSettingValue('thousand_separator') ,['id' => 'thousandSeparator']) }}
     {{ Form::hidden('decimal_separator',isset($invoice->recurring) ,['id' => 'decimalSeparator']) }}
     {{ Form::hidden('default_tax',json_encode($defaultTax, true),['id' => 'defaultTax']) }}
+    
 @endsection
