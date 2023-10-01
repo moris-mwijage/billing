@@ -341,6 +341,7 @@ $(document).ready(function() {
     // Listen for changes on the client select input
     $('#client_id').change(function() {
         var clientId = $(this).val(); // Get the selected client ID
+        alert(clientId);
         // Make an AJAX request to fetch the current_meter_count
         $.ajax({
             url: '/admin/get-current-meter-count/' + clientId, // Replace with the actual URL
