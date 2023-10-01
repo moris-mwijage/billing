@@ -348,12 +348,15 @@ $(document).ready(function() {
             type: 'GET',
             dataType: 'json',
             success: function(response) {
+                console.log(response.client_id);
+
                 if (response.current_meter_count !== undefined) {
                     $('#error-message').text('Response: ' + JSON.stringify(response.current_meter_count));
                     $('#previous_meter_count').val(response.current_meter_count); // Update to current_meter_count
 
                     // $('#error-message').show(); // Display the element
                 } else {
+                    console.log(response.client_id);
                     // Display an error message
                     $('#error-message').show().text('Response does not contain client_id.');
                 }
