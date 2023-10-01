@@ -88,15 +88,28 @@ class InvoiceController extends AppBaseController
 
 
     public function getCurrentMeterCount($clientId) {
-        // Query the Invoice model to get the current_meter_count for the given client_id
-        $selected_id = Client::where('user_id', $clientId)->value('id');
-        $currentMeterCount = Invoice::where('client_id', $selected_id)
-                            ->orderBy('id', 'desc')
-                            ->pluck('current_meter_count')
-                            ->first();
-        // Return the current_meter_count as is
-        return response()->json(['current_meter_count' => $currentMeterCount]);
+        // Find the client's ID based on the provided user_id
+        $selectedClientId = Client::where('user_id', $clientId)->value('id');
+    
+        if ($selectedClientId !== null) {
+            // Query the Invoice model to get the current_meter_count for the given client_id
+            $currentMeterCount = Invoice::where('client_id', $selectedClientId)
+                ->orderBy('id', 'desc')
+                ->value('current_meter_count');
+    
+            if ($currentMeterCount !== null) {
+                // Return the current_meter_count as JSON
+                return response()->json(['current_meter_count' => $currentMeterCount]);
+            } else {
+                // Handle the case where current_meter_count is null (not found)
+                return response()->json(['error' => 'Current meter count not found'], 404);
+            }
+        } else {
+            // Handle the case where the client with the provided user_id is not found
+            return response()->json(['error' => 'Client not found'], 404);
+        }
     }
+    
     
 
     /**
