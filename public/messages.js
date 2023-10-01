@@ -341,14 +341,12 @@ $(document).ready(function() {
     // Listen for changes on the client select input
     $('#client_id').change(function() {
         var clientId = $(this).val(); // Get the selected client ID
-        alert(clientId);
         // Make an AJAX request to fetch the current_meter_count
         $.ajax({
             url: '/admin/get-current-meter-count/' + clientId, // Replace with the actual URL
             type: 'GET',
             dataType: 'json',
             success: function(response) {
-                console.log(response.client_id);
 
                 if (response.current_meter_count !== undefined) {
                     $('#error-message').text('Response: ' + JSON.stringify(response.current_meter_count));
@@ -356,7 +354,6 @@ $(document).ready(function() {
 
                     // $('#error-message').show(); // Display the element
                 } else {
-                    console.log(response.client_id);
                     // Display an error message
                     $('#error-message').show().text('Response does not contain client_id.');
                 }

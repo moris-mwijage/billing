@@ -89,8 +89,8 @@ class InvoiceController extends AppBaseController
 
     public function getCurrentMeterCount($clientId) {
         // Find the client's ID based on the provided user_id
-        $selectedClientId = Client::where('user_id','==',12)->value('id');
-        dd($selectedClientId);
+        $selectedClientId = Client::where('user_id', $clientId)->value('id');
+    
         if ($selectedClientId !== null) {
             // Query the Invoice model to get the current_meter_count for the given client_id
             $currentMeterCount = Invoice::where('client_id', $selectedClientId)
