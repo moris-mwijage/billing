@@ -355,6 +355,7 @@ return [
     ],
 
     'invoice' => [
+        'difference_count' => 'Difference Count',
         'previous_meter_count' => 'Previous Meter Count',
         'current_meter_count' => 'Current Meter Count',
         'fax_no' => 'Fax Number',

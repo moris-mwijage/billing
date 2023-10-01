@@ -160,20 +160,24 @@ class InvoiceRepository extends BaseRepository
             $input['tax_id'] = json_decode($input['tax_id']);
             $input['tax'] = json_decode($input['tax']);
             $input['recurring_status'] = isset($input['recurring_status']);
-            if (! empty(getSettingValue('invoice_no_prefix'))) {
-                $input['invoice_id'] = getSettingValue('invoice_no_prefix').'-'.$input['invoice_id'];
+            if (!empty(getSettingValue('invoice_no_prefix'))) {
+                $input['invoice_id'] = getSettingValue('invoice_no_prefix') . '-' . $input['invoice_id'];
             }
-            if (! empty(getSettingValue('invoice_no_suffix'))) {
-                $input['invoice_id'] .= '-'.getSettingValue('invoice_no_suffix');
+            if (!empty(getSettingValue('invoice_no_suffix'))) {
+                $input['invoice_id'] .= '-' . getSettingValue('invoice_no_suffix');
             }
 
             if (empty($input['final_amount'])) {
                 $input['final_amount'] = 0;
             }
 
-            if (! empty($input['recurring_status']) && empty($input['recurring_cycle'])) {
+            if (!empty($input['recurring_status']) && empty($input['recurring_cycle'])) {
                 throw new UnprocessableEntityHttpException('Please enter the value in Recurring Cycle.');
             }
+
+            // Include the meter counts in the $input array
+            $previousMeterCount = $input['previous_meter_count'];
+            $currentMeterCount = $input['current_meter_count'];
 
             $invoiceItemInputArray = Arr::only($input, ['product_id', 'quantity', 'price', 'tax', 'tax_id']);
             $invoiceExist = Invoice::where('invoice_id', $input['invoice_id'])->exists();
@@ -182,21 +186,21 @@ class InvoiceRepository extends BaseRepository
             foreach ($invoiceItemInput as $key => $value) {
                 $total[] = $value['price'] * $value['quantity'];
             }
-            if (! empty($input['discount'])) {
+            if (!empty($input['discount'])) {
                 if (array_sum($total) <= $input['discount']) {
                     throw new UnprocessableEntityHttpException('Discount amount should not be greater than sub total.');
                 }
             }
 
             if ($invoiceExist) {
-                throw new UnprocessableEntityHttpException('Invoice id already exist');
+                throw new UnprocessableEntityHttpException('Invoice id already exists');
             }
 
             $inputInvoiceTaxes = isset($input['taxes']) ? $input['taxes'] : [];
             $input = Arr::only($input, [
                 'invoice_id', 'invoice_date', 'due_date', 'discount_type', 'discount', 'amount', 'final_amount',
                 'note', 'term', 'template_id', 'payment_qr_code_id', 'status', 'tax_id', 'tax', 'tenant_id', 'client_id', 'currency_id',
-                'recurring_status', 'recurring_cycle',
+                'recurring_status', 'recurring_cycle', 'previous_meter_count', 'current_meter_count'
             ]);
 
             /** @var Client $clientUser */

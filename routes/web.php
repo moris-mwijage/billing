@@ -120,6 +120,7 @@ Route::prefix('admin')->middleware(['auth', 'xss', 'role:admin', 'check_subscrip
 
     //Invoice
     Route::resource('invoices', InvoiceController::class);
+    Route::get('/get-current-meter-count/{clientId}', [InvoiceController::class,'getCurrentMeterCount']);
     Route::post(
         'invoices',
         [InvoiceController::class, 'store']

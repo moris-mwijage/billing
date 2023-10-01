@@ -6,6 +6,7 @@ use Exception;
 use Carbon\Carbon;
 use App\Models\Invoice;
 use App\Models\Product;
+use App\Models\Client;
 use App\Models\Currency;
 use Laracasts\Flash\Flash;
 use Illuminate\Http\Request;
@@ -84,6 +85,19 @@ class InvoiceController extends AppBaseController
 
         return $this->sendResponse($invoice, __('messages.flash.invoice_saved'));
     }
+
+
+    public function getCurrentMeterCount($clientId) {
+        // Query the Invoice model to get the current_meter_count for the given client_id
+        $selected_id = Client::where('user_id', $clientId)->value('id');
+        $currentMeterCount = Invoice::where('client_id', $selected_id)
+                            ->orderBy('id', 'desc')
+                            ->pluck('current_meter_count')
+                            ->first();
+        // Return the current_meter_count as is
+        return response()->json(['current_meter_count' => $currentMeterCount]);
+    }
+    
 
     /**
      * Display the specified resource.

@@ -22,6 +22,8 @@ return new class extends Migration
             $table->date('invoice_date');
             $table->date('due_date');
             $table->float('amount')->nullable();
+            $table->float('previos_meter_count')->nullable();
+            $table->float('current_meter_count')->nullable();
             $table->float('final_amount')->nullable();
             $table->integer('discount_type')->default(0);
             $table->float('discount')->default(0);

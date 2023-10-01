@@ -188,6 +188,8 @@ class Invoice extends Model
         'recurring_status',
         'recurring_cycle',
         'last_recurring_on',
+        'previous_meter_count',
+        'current_meter_count',
     ];
 
     protected $casts = [

@@ -29,7 +29,10 @@
             <link rel="stylesheet" type="text/css" href="https://npmcdn.com/flatpickr/dist/themes/dark.css">
         @endif
         @livewireStyles
+        
         @livewireScripts
+      
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="https://cdn.jsdelivr.net/gh/livewire/turbolinks@v0.1.x/dist/livewire-turbolinks.js"
                 data-turbolinks-eval="false" data-turbo-eval="false"></script>
         <script src="https://js.stripe.com/v3/"></script>
@@ -99,6 +102,8 @@
         </script>
         @routes
         <script src="{{ mix('assets/js/pages.js') }}"></script>
+        
+        
         @yield('phone_js')
 </head>
 <body class="main-body">

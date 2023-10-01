@@ -1,8 +1,16 @@
 <div class="row">
+    <div id="error-message" class="alert alert-danger" style="display: none;"></div>
     <div class="col-lg-6 col-sm-12 mb-5">
-        {{ Form::label('client_id', __('messages.invoice.client') . ':', ['class' => 'form-label required mb-3']) }}
-        {{ Form::select('client_id', $clients, $client_id ?? null, ['class' => 'form-select io-select2', 'id' => 'client_id', 'placeholder' => __('messages.invoice.client'), 'required', 'data-control' => 'select2']) }}
+        <label for="client_id" class="form-label required mb-3">{{ __('messages.invoice.client') }}:</label>
+        <select id="client_id" name="client_id" class="form-select io-select2" required data-control="select2">
+            <option value="" disabled>{{ __('messages.invoice.client') }}</option>
+            @foreach ($clients as $clientId => $clientName)
+                <option value="{{ $clientId }}" @if ($clientId == ($client_id ?? null)) selected @endif>{{ $clientName }}</option>
+            @endforeach
+        </select>
     </div>
+    
+   
     <div class="col-lg-6 col-sm-12 mb-lg-0 mb-5">
         @if (!empty(getSettingValue('invoice_no_prefix')) || !empty(getSettingValue('invoice_no_suffix')))
             <div class="" data-bs-toggle="tooltip" data-bs-trigger="hover" title=""
@@ -77,6 +85,11 @@
         {{ Form::label('current_meter_count', __('messages.invoice.current_meter_count') . ':', ['class' => 'form-label mb-3']) }}
         {{ Form::number('current_meter_count', null, ['class' => 'form-control', 'id' => 'current_meter_count', 'placeholder' => __('Provide current meter count'), 'autocomplete' => 'off', 'min' => 1]) }}
     </div>
+
+    <div class="col-lg-6 col-sm-12 mb-5">
+        {{ Form::label('unit_used', __('messages.invoice.difference_count') . ':', ['class' => 'form-label mb-3']) }}
+        {{ Form::number('unit_used', null, ['class' => 'form-control', 'id' => 'unit_used', 'placeholder' => __('Provide unit used'), 'autocomplete' => 'off', 'min' => 1]) }}
+    </div>
     
     <div class="mb-5 col-lg-6 col-sm-12 mt-8">
         <label class="form-check form-switch form-check-custom mt-3">
@@ -114,7 +127,7 @@
                         {{ Form::select('product_id[]', $products, null, ['class' => 'form-select product io-select2', 'required', 'placeholder' => __('messages.quote.select_product'), 'data-control' => 'select2']) }}
                     </td>
                     <td class="table__qty">
-                        {{ Form::number('quantity[]', null, ['class' => 'form-control qty form-control-solid', 'required', 'type' => 'number', 'min' => '0', 'step' => '.01', 'oninput' => "validity.valid||(value=value.replace(/[e\+\-]/gi,''))"]) }}
+                        {{ Form::number('quantity[]', null, ['class' => 'form-control qty form-control-solid', 'id' => 'quantity_1',  'required', 'type' => 'number', 'min' => '0', 'step' => '.01', 'oninput' => "validity.valid||(value=value.replace(/[e\+\-]/gi,''))"]) }}
                     </td>
                     <td>
                         {{ Form::number('price[]', null, ['class' => 'form-control price-input price form-control-solid', 'oninput' => "validity.valid||(value=value.replace(/[e\+\-]/gi,''))", 'min' => '0', 'value' => '0', 'step' => '.01', 'pattern' => "^\d*(\.\d{0,2})?$", 'required', 'onKeyPress' => 'if(this.value.length==8) return false;']) }}
