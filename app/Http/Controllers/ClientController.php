@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateClientRequest;
 use App\Http\Requests\UpdateClientRequest;
+use Illuminate\Support\Str;
 use App\Models\City;
 use App\Models\Client;
 use App\Models\Country;
@@ -46,8 +47,8 @@ class ClientController extends AppBaseController
     public function create(): View|Factory|Application
     {
         $countries = Country::toBase()->pluck('name', 'id')->toArray();
-
-        return view('clients.create', compact('countries'));
+        $randomEmail = 'user_' . Str::random(10) . '@example.com';
+        return view('clients.create', compact('countries','randomEmail'));
     }
 
     public function store(CreateClientRequest $request): RedirectResponse

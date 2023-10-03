@@ -14,7 +14,7 @@
     <div class="col-lg-6">
         <div class="mb-5 position-relative">
             {{ Form::label('email', __('messages.client.email') . ':', ['class' => 'form-label mb-3']) }}
-            {{ Form::text('email', null, ['class' => 'form-control form-control-solid search-email user-email', 'placeholder' => __('messages.client.email'), 'autocomplete' => 'off']) }}
+            {{ Form::text('email',$randomEmail, ['class' => 'form-control form-control-solid search-email user-email', 'placeholder' => __('messages.client.email'), 'autocomplete' => 'off']) }}
             <ul class="form-select search-email-list"></ul>
         </div>
     </div>
@@ -28,6 +28,13 @@
             <span id="error-msg" class="hide text-danger fw-400 fs-small mt-2"></span>
         </div>
     </div>
+    <div class="col-lg-6">
+        <div class="mb-5">
+            {{ Form::label('meter_number', __('Client Meter Number') . ':', ['class' => 'form-label required mb-3']) }}
+            {{ Form::text('meter_number', null, ['class' => 'form-control form-control-solid meter-number', 'placeholder' => __('Client Meter Number'), 'required']) }}
+        </div>
+    </div>
+    
     <div class="col-md-6 mb-5">
         <div class="fv-row">
             <div>
@@ -69,27 +76,10 @@
     <div class="col-lg-6">
         <div class="mb-5">
             {{ Form::label('postal_code', __('messages.client.postal_code') . ':', ['class' => 'form-label required mb-3']) }}
-            {{ Form::text('postal_code', null, ['class' => 'form-control form-control-solid postal-code', 'placeholder' => __('messages.client.postal_code'), 'required']) }}
+            {{ Form::text('postal_code', 'Dodoma', ['class' => 'form-control form-control-solid postal-code', 'placeholder' => __('messages.client.postal_code'), 'required']) }}
         </div>
     </div>
-    <div class="col-lg-4">
-        <div class="mb-5">
-            {{ Form::label('country', __('messages.client.country') . ':', ['class' => 'form-label mb-3']) }}
-            {{ Form::select('country_id', $countries, null, ['id' => 'countryId', 'class' => 'form-select form-select-solid country', 'placeholder' => __('messages.client.country'), 'data-control' => 'select2']) }}
-        </div>
-    </div>
-    <div class="col-lg-4">
-        <div class="mb-5">
-            {{ Form::label('state', __('messages.client.state') . ':', ['class' => 'form-label mb-3']) }}
-            {{ Form::select('state_id', [], null, ['id' => 'stateId', 'class' => 'form-select form-select-solid state', 'placeholder' => __('messages.client.state'), 'data-control' => 'select2']) }}
-        </div>
-    </div>
-    <div class="col-lg-4">
-        <div class="mb-5">
-            {{ Form::label('city', __('messages.client.city') . ':', ['class' => 'form-label mb-3']) }}
-            {{ Form::select('city_id', [], null, ['id' => 'cityId', 'class' => 'form-select form-select-solid city', 'placeholder' => __('messages.client.city'), 'data-control' => 'select2']) }}
-        </div>
-    </div>
+  
     <div class="col-lg-6">
         <div class="mb-5">
             {{ Form::label('address', __('messages.client.address') . ':', ['class' => 'form-label mb-3']) }}

@@ -72,6 +72,8 @@ class Client extends Model
         'city_id',
         'tenant_id',
         'user_id',
+        'meter_number',
+
     ];
 
     protected $casts = [
@@ -96,6 +98,7 @@ class Client extends Model
         'password' => 'nullable|same:password_confirmation|min:6',
         'contact' => 'nullable|is_unique:users,contact',
         'postal_code' => 'string',
+        'meter_number' => 'required|is_unique:clients,meter_number',
         'address' => 'nullable|string',
         'website' => 'nullable|url',
     ];

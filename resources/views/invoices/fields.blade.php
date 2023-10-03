@@ -67,7 +67,7 @@
     <div class="mb-5 col-lg-6 col-sm-12">
         {{ Form::label('invoiceCurrencyType', __('messages.setting.currencies') . ':', ['class' => 'form-label mb-3']) }}
         <select id="invoiceCurrencyType" class="form-select" name="currency_id">
-            <option value="">{{ __('messages.invoice.select_currency') }}</option>
+            {{-- <option value="">{{ __('messages.invoice.select_currency') }}</option> --}}
             @foreach ($currencies as $key => $currency)
                 <option value="{{ $currency['id'] }}">{{ $currency['icon'] }}
                     &nbsp;&nbsp;&nbsp; {{ $currency['name'] }}
