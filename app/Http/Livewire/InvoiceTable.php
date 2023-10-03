@@ -104,6 +104,19 @@ class InvoiceTable extends LivewireTableComponent
                 ->format(function ($value, $row, Column $column) {
                     return getInvoiceCurrencyAmount($row->final_amount, $row->currency_id, 'true', $row->tenant_id);
                 }),
+            Column::make(__('Previous Meter Count'), 'previous_meter_count')
+            ->sortable()
+            ->searchable()
+            ->format(function ($value, $row, Column $column) {
+                return $value; // Adjust the format as needed
+            }),
+            Column::make(__('Current Meter Count'), 'current_meter_count')
+            ->sortable()
+            ->searchable()
+            ->format(function ($value, $row, Column $column) {
+                return $value; // Adjust the format as needed
+            }),
+           
             Column::make(__('messages.invoice.transactions'), 'amount')
                 ->searchable()
                 ->view('invoices.components.transaction'),
