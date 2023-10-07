@@ -1,6 +1,6 @@
 <script id="defaultTemplate" type="text/x-jsrender">
     <?php
-    $styleCss = 'style';
+        $styleCss = 'style';
     ?>
     <div class="preview-main client-preview">
         <div class="d" id="boxes">
@@ -16,92 +16,39 @@
                     </div>
                 </div>
 
-                    <div class="d-col-2">
-                        <div class="col-66">
-                            <small class="f-s-15 m-b-3"><b><?php echo __('messages.common.from') ?></b></small><br>
-                            <p class="p-text mb-0">{{:companyName}}</p>
-                            <p class="p-text mb-0">{{:companyAddress}}</p>
-                            <p class="p-text mb-0">Mo: {{:companyPhone}}</p>
-                        </div>
+                <div class="d-col-2">
+                    <div class="col-66">
+                        <small class="f-s-15 m-b-3"><b><?php echo __('messages.common.from') ?></b></small><br>
+                        <p class="p-text mb-0">{{:companyName}}</p>
+                        <p class="p-text mb-0">{{:companyAddress}}</p>
+                        <p class="p-text mb-0">Mo: {{:companyPhone}}</p>
                     </div>
-                    <div class="row mt-5">
-                        <div class="col-lg-9">
-                            <div class="mb-2"><small class="from-font-size"><b><?php echo __('messages.common.to') ?></b></small><br></div>
-                                <p class="p-text mb-3">&lt<?php echo __('messages.invoice.client_name')  ?>&gt</p>
-                                <p class="p-text mb-3">&lt<?php echo __('messages.invoice.client_email')  ?>&gt</p>
-                                <p class="p-text mb-3">&lt<?php echo __('messages.client_address')  ?>&gt</p>
-                            <p class="p-text mb-0"><b><?php echo __('messages.invoice.invoice_date') ?>: </b> 25th Nov, 2020 8:03 AM</p>
-                            <p class="p-text mb-0"><b><?php echo __('messages.invoice.due_date') ?>: </b> 26th Nov, 2020</p>
-                        </div>
+                </div>
+                <div class="row mt-5">
+                    <div class="col-lg-9">
+                        <div class="mb-2"><small class="from-font-size"><b><?php echo __('messages.common.to') ?></b></small><br></div>
+                        <p class="p-text mb-3">&lt<?php echo __('messages.invoice.client_name')  ?>&gt</p>
+                        <p class="p-text mb-3">&lt<?php echo __('messages.invoice.client_email')  ?>&gt</p>
+                        <p class="p-text mb-3">&lt<?php echo __('messages.client_address')  ?>&gt</p>
+                        <p class="p-text mb-0"><b><?php echo __('messages.invoice.invoice_date') ?>: </b> 25th Nov, 2020 8:03 AM</p>
+                        <p class="p-text mb-0"><b><?php echo __('messages.invoice.due_date') ?>: </b> 26th Nov, 2020</p>
+                    </div>
                     <div class="col-md-3 d-flex align-items-end">
-                            <div class="text-center ">
-                                <small  style="font-size: 15px; margin-bottom: 3px"><b><?php echo __('messages.payment_qr_codes.payment_qr_code') ?></b></small><br>
-                                <img class="mt-2" src="<?php echo asset('images/qrcode.png') ?>" height="110" width="110">
-                            </div>
-                        </div>
-                </div>
-                <div class="table d-table">
-                    <div class="d-table-tr" <?php echo $styleCss ?>="background:{{:invColor}};color: #fff;">
-                        <div class="d-table-th in-w-1 border-solid-ccc padding-8">#</div>
-                        <div class="d-table-th in-w-2 border-solid-ccc padding-8"><?php echo __('messages.item') ?></div>
-                        <div class="d-table-th in-w-3 border-solid-ccc padding-8"><?php echo __('messages.invoice.qty') ?></div>
-                        <div class="d-table-th in-w-4 text-right amount-text-color"><?php echo __('messages.invoice.amount') ?></div>
-                    </div>
-                    <div class="d-table-body">
-                        <div class="d-table-tr">
-                            <div class="d-table-td in-w-1 border-solid-ccc padding-8"><span>1</span></div>
-                            <div class="d-table-td in-w-2 border-solid-ccc padding-8">
-                                <pre><?php echo __('messages.item') ?> 1</pre>
-                            </div>
-                            <div class="d-table-td in-w-3 border-solid-ccc padding-8">
-                                1
-                            </div>
-                            <div class="d-table-td in-w-4 text-right border-solid-ccc padding-8"><span >
-                            <?php echo getCurrencyAmount(100, true) ?></span></div>
-                        </div>
-                        <div class="d-table-tr">
-                            <div class="d-table-td in-w-1 border-solid-ccc padding-8"><span>2</span></div>
-                            <div class="d-table-td in-w-2 border-solid-ccc padding-8">
-                                <pre><?php echo __('messages.item') ?> 2</pre>
-                            </div>
-                            <div class="d-table-td in-w-3 border-solid-ccc padding-8">
-                                1
-                            </div>
-                            <div class="d-table-td in-w-4 text-right border-solid-ccc padding-8"><span ><?php echo getCurrencyAmount(100, true) ?></span></div>
-                        </div>
-                        <div class="d-table-tr">
-                            <div class="d-table-td in-w-1 border-solid-ccc padding-8"><span>3</span></div>
-                            <div class="d-table-td in-w-2 border-solid-ccc padding-8">
-                                <pre><?php echo __('messages.item') ?> 3</pre>
-                            </div>
-                            <div class="d-table-td in-w-3 border-solid-ccc padding-8">
-                                1
-                            </div>
-                            <div class="d-table-td in-w-4 text-right border-solid-ccc padding-8"><span ><?php echo getCurrencyAmount(100, true) ?></span></div>
-                        </div>
-                    </div>
-                    <div class="d-table-footer">
-                        <div class="d-table-controls"></div>
-                        <div class="d-table-summary">
-                            <div class="d-table-summary-item">
-                                <div class="d-table-label"><strong ><?php echo __('messages.invoice.amount') ?>:</strong></div>
-                                <div class="d-table-value"><?php echo getCurrencyAmount(300, true) ?></div>
-                            </div>
-                            <div class="d-table-summary-item">
-                                <div class="d-table-label"><strong ><?php echo __('messages.invoice.discount') ?>:</strong></div>
-                                <div class="d-table-value"><?php echo getCurrencyAmount(50, true) ?></div>
-                            </div>
-                            <div class="d-table-summary-item">
-                                <div class="d-table-label"><strong ><?php echo __('messages.invoice.tax') ?>:</strong></div>
-                                <div class="d-table-value">0%</div>
-                            </div>
-                            <div class="d-table-summary-item">
-                                <div class="d-table-label"><strong ><?php echo __('messages.invoice.total') ?>:</strong></div>
-                                <div class="d-table-value"><?php echo getCurrencyAmount(250, true) ?></div>
-                            </div>
+                        <div class="text-center ">
+                            <small  style="font-size: 15px; margin-bottom: 3px"><b><?php echo __('messages.payment_qr_codes.payment_qr_code') ?></b></small><br>
+                            <img class="mt-2" src="<?php echo asset('images/qrcode.png') ?>" height="110" width="110">
                         </div>
                     </div>
                 </div>
+                <!-- Remove the table and insert your receipt content here -->
+                <!-- You can add the receipt details as per your requirements -->
+                <!-- For example: -->
+                <div class="receipt-content">
+                    <p><b>Item 1:</b> Description 1 - <?php echo getCurrencyAmount(100, true) ?></p>
+                    <p><b>Item 2:</b> Description 2 - <?php echo getCurrencyAmount(100, true) ?></p>
+                    <p><b>Item 3:</b> Description 3 - <?php echo getCurrencyAmount(100, true) ?></p>
+                </div>
+                
                 <div class="break-25"></div>
                  <div class="row">
                     <div class="d-col-3">
@@ -120,8 +67,6 @@
             </div>
         </div>
     </div>
-
-
 </script>
 
 <script id="newYorkTemplate" type="text/x-jsrender">
