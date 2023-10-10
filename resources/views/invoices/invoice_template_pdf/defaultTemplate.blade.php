@@ -136,6 +136,8 @@
                 $previous_meter_count = App\Models\Invoice::where('invoice_id', $invoice->invoice_id)->pluck('previous_meter_count');
                 $current_meter_count = App\Models\Invoice::where('invoice_id', $invoice->invoice_id)->pluck('current_meter_count');
             @endphp
+            @dd($previous_meter_count);
+            
             <td class="number-align">
                 {{ isset($invoiceItems->previous_meter_count) ? $invoiceItems->previous_meter_count : __('messages.common.n/a') }}
             </td>
