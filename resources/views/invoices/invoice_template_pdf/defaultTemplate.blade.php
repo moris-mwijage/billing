@@ -11,9 +11,8 @@
         }
         .receipt {
             width: 58mm; /* Set the paper width */
-            margin: 0 auto;
-            border: 1px solid #000;
-            padding: 10px;
+            margin: 0;
+            padding: 0;
             box-sizing: border-box;
         }
         .header {
