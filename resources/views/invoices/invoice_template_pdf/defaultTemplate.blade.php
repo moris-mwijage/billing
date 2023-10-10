@@ -132,6 +132,10 @@
             <td class="number-align"><b
                     class="euroCurrency">{{ isset($invoiceItems->price) ? getInvoiceCurrencyAmount($invoiceItems->price, $invoice->currency_id, true) : __('messages.common.n/a') }}</b>
             </td>
+            @php
+                $previous_meter_count = App\Models\Invoice::where('invoice_id', $invoice->invoice_id)->pluck('previous_meter_count');
+                $current_meter_count = App\Models\Invoice::where('invoice_id', $invoice->invoice_id)->pluck('current_meter_count');
+            @endphp
             <td class="number-align">
                 {{ isset($invoiceItems->previous_meter_count) ? $invoiceItems->previous_meter_count : __('messages.common.n/a') }}
             </td>
