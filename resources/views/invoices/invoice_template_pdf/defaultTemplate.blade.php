@@ -15,43 +15,254 @@
             font-family: DejaVu Sans, Arial, "Helvetica", Arial, "Liberation Sans", sans-serif;
         }
 
-        /* Define 58mm page size (58mm width) */
-        @page {
-            size: 58mm;
-            margin: 0; /* No margins for receipt paper */
-        }
-
-        /* Custom CSS for receipt content */
-        .receipt-content {
-            padding: 5px;
-            text-align: center;
-        }
-
-        /* Adjust font size for receipt content */
-        .receipt-content p {
-            font-size: 12px;
-        }
-
-        /* Adjust spacing for receipt content */
-        .receipt-content p {
-            margin: 2px 0;
-            word-wrap: break-word; /* Allow text to wrap within the width */
-        }
+        @if (getInvoiceCurrencySymbol($invoice->currency_id) == '€')
+            .euroCurrency {
+                font-family: Arial, "Helvetica", Arial, "Liberation Sans", sans-serif;
+            }
+        @endif
     </style>
 </head>
 
 <body>
-    <div class="receipt-content">
-        <p>{{ __('messages.common.invoice') }}</p>
-        <p>{{ __('messages.invoice.invoice_id') . ': #12345' }}</p>
-        <p>{{ __('messages.invoice.invoice_date') . ': 2023-10-05' }}</p>
-        <p>{{ __('messages.common.from') . ': Company Name' }}</p>
-        <p>{{ __('messages.common.to') . ': Customer Name' }}</p>
-        <p>{{ __('Previous Meter Count') . ': 1000' }}</p>
-        <p>{{ __('Current Meter Count') . ': 1200' }}</p>
-        <p>{{ __('messages.product.unit_price') . ': $10.00' }}</p>
-        <p>{{ __('messages.invoice.amount') . ': $120.00' }}</p>
-    </div>
+    @php $styleCss = 'style'; @endphp
+    <table width="100%">
+        <tr>
+            <td class="header-left">
+                <div class="main-heading" style="font-size: 40px">{{ __('messages.common.invoice') }}</div>
+                <div class="invoice-number font-color-gray">{{ __('messages.invoice.invoice_id') . ':' }}
+                    &nbsp;#{{ $invoice->invoice_id }}</div>
+                <div class="logo"><img width="100px" src="{{ getLogoUrl($invoice->tenant_id) }}" alt="no-image">
+                </div>
+            </td>
+        </tr>
+    </table>
+    <br>
+    <table width="100%">
+        <thead>
+            <tr>
+                <td colspan="2" class="vertical-align-top" width="200px">
+                    <strong class="from-font-size">{{ __('messages.common.from') }} </strong><br>
+                    {{ html_entity_decode($setting['app_name']) }}<br>
+                    <b>{{ __('messages.common.address') . ':' }}&nbsp;</b>{!! $setting['company_address'] !!}<br>
+                    @if (isset($setting['show_additional_address_in_invoice']) && $setting['show_additional_address_in_invoice'] == 1)
+                        <div>
+                            {{ $setting['country'] . ', ' . $setting['state'] . ', ' . $setting['city'] . ', ' . $setting['zipcode'] . '.' }}
+                        </div>
+                    @endif
+                    <b>{{ __('messages.user.phone') . ':' }}&nbsp;</b>{{ $setting['company_phone'] }}<br>
+                    @if (isset($setting['show_additional_address_in_invoice']) && $setting['show_additional_address_in_invoice'] == 1)
+                        <div><b>{{ __('messages.invoice.fax_no') . ':' }}&nbsp;</b>{{ $setting['fax_no'] }}</div>
+                    @endif
+
+                </td>
+            </tr>
+        </thead>
+    </table>
+    <br>
+    <table width="100%">
+        <thead class="text-left">
+            <tr class="align-bottom">
+                <td style="width: 70%">
+                    <strong class="from-font-size">{{ __('messages.common.to') }} </strong><br>
+                    <b>{{ __('messages.common.name') . ':' }}&nbsp;</b>{{ $client->user->full_name }}<br>
+                    <b>{{ __('messages.common.email') . ':' }}&nbsp;</b>{{ $client->user->email }}<br>
+                    @if (!empty($client->address))
+                        <b>{{ __('messages.common.address') . ':' }}&nbsp;</b>{{ $client->address }}
+                    @endif
+                    <br>
+                    <strong>{{ __('messages.invoice.invoice_date') . ':' }}
+                        &nbsp;</strong>{{ \Carbon\Carbon::parse($invoice->invoice_date)->translatedFormat(currentDateFormat()) }}
+                    <br>
+                    <strong>{{ __('messages.invoice.due_date') . ':' }}
+                        &nbsp;</strong>{{ \Carbon\Carbon::parse($invoice->due_date)->translatedFormat(currentDateFormat()) }}
+                </td>
+                @if (!empty($invoice->paymentQrCode))
+                    <td style="width: 30%" class="text-center">
+                        <strong
+                            style="font-size: ; margin-right: 142px"><b>{{ __('messages.payment_qr_codes.payment_qr_code') }}</b></strong><br>
+                        <img class="mt-2" src="{{ $invoice->paymentQrCode->qr_image }}" height="110"
+                            width="110">
+                    </td>
+                @endif
+            </tr>
+        </thead>
+    </table>
+    <table class="w-100">
+        <tr class="invoice-items">
+            <td colspan="2">
+                <table class="d-items-table table-striped table-bordered">
+                    <thead>
+                        <tr {{ $styleCss }}="background:{{ $invoice_template_color }};">
+                            <th {{ $styleCss }}="border: 1px solid; padding: 5px;">#</th>
+                            <th {{ $styleCss }}="border: 1px solid; padding: 5px;">
+                                {{ __('messages.product.product') }}</th>
+                            <th class="number-align" {{ $styleCss }}="border: 1px solid; padding: 5px;">
+                                {{ __('Units') }}</th>
+                            <th class="number-align" {{ $styleCss }}="border: 1px solid; padding: 5px;">
+                                {{ __('messages.product.unit_price') }}</th>
+                            <th class="number-align" {{ $styleCss }}="border: 1px solid; padding: 5px;">
+                                {{ __('Previous Units') }}</th>
+                            <th class="number-align" {{ $styleCss }}="border: 1px solid; padding: 5px;">
+                            {{ __('Current Units') }}</th>
+                            <th class="number-align" {{ $styleCss }}="border: 1px solid; padding: 5px;">
+                                {{ __('messages.invoice.amount') }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (isset($invoice) && !empty($invoice))
+                            @foreach ($invoice->invoiceItems as $key => $invoiceItems)
+                                <tr>
+                                    <td>{{ $key + 1 }}</td>
+                                    @if (
+                                        !empty($invoiceItems->product->description) &&
+                                            (isset($setting['show_product_description']) && $setting['show_product_description'] == 1))
+                                        <td style="width: 30%!important;">
+                                        @else
+                                        <td>
+                                    @endif
+                                    {{ isset($invoiceItems->product->name) ? $invoiceItems->product->name : $invoiceItems->product_name ?? __('messages.common.n/a') }}
+                                    @if (
+                                        !empty($invoiceItems->product->description) &&
+                                            (isset($setting['show_product_description']) && $setting['show_product_description'] == 1))
+                                        <br><span
+                                            style="font-size: 12px; word-break: break-all">{{ $invoiceItems->product->description }}</span>
+                                    @endif
+            </td>
+            <td class="number-align">{{ number_format($invoiceItems->quantity, 2) }}</td>
+            <td class="number-align"><b
+                    class="euroCurrency">{{ isset($invoiceItems->price) ? getInvoiceCurrencyAmount($invoiceItems->price, $invoice->currency_id, true) : __('messages.common.n/a') }}</b>
+            </td>
+            @php
+                $previous = App\Models\Invoice::where('invoice_id', $invoice->invoice_id)->first();
+                $current = App\Models\Invoice::where('invoice_id', $invoice->invoice_id)->first();
+                $previous_meter_count = $previous->previous_meter_count;
+                $current_meter_count = $current->current_meter_count;
+            @endphp
+            
+            <td class="number-align">
+                {{ isset($previous_meter_count) ? $previous_meter_count : __('messages.common.n/a') }}
+            </td>
+            <td class="number-align">
+                {{ isset($current_meter_count) ? $current_meter_count : __('messages.common.n/a') }}
+            </td>
+
+By adding these columns to your invoice table and displaying the values in the rows, you should be able to include the previous_meter_count and current_meter_count in your generated invoice PDF. Make sure that the data is correctly loaded into the $invoice object from your database before rendering the PDF.
+
+           
+            <td class="number-align"><b
+                    class="euroCurrency">{{ isset($invoiceItems->total) ? getInvoiceCurrencyAmount($invoiceItems->total, $invoice->currency_id, true) : __('messages.common.n/a') }}</b>
+            </td>
+        </tr>
+        @endforeach
+        @endif
+        </tbody>
+    </table>
+    </td>
+    </tr>
+    <tr>
+        <td>
+            @if (count($invoice->invoiceTaxes) > 0)
+                <table width="20%" class="mt-2">
+                    <thead>
+                        <tr>
+                            <td class="font-weight-bold" style="white-space: nowrap">
+                                {{ __('messages.tax_information') . ':' }}</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($invoice->invoiceTaxes as $tax)
+                            <tr>
+                                <td>
+                                    <div class="mb-1"><b>{{ $tax->value . '%' }}</b>{{ ' (' . $tax->name . ')' }}
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            @endif
+        </td>
+        <td>
+            <table class="d-invoice-footer">
+                <tr>
+                    <td class="font-weight-bold">{{ __('messages.invoice.sub_total') . ':' }}</td>
+                    <td class="text-nowrap">
+                        <b
+                            class="euroCurrency">{{ getInvoiceCurrencyAmount($invoice->amount, $invoice->currency_id, true) }}</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="font-weight-bold">{{ __('messages.invoice.discount') . ':' }}</td>
+                    <td class="text-nowrap">
+                        @if ($invoice->discount == 0)
+                            <span>{{ __('messages.common.n/a') }}</span>
+                        @else
+                            @if (isset($invoice) && $invoice->discount_type == \App\Models\Invoice::FIXED)
+                                <b
+                                    class="euroCurrency">{{ isset($invoice->discount) ? getInvoiceCurrencyAmount($invoice->discount, $invoice->currency_id, true) : __('messages.common.n/a') }}</b>
+                            @else
+                                {{ $invoice->discount }}<span
+                                    {{ $styleCss }}="font-family: DejaVu Sans">&#37;</span>
+                            @endif
+                        @endif
+                    </td>
+                </tr>
+                <tr>
+                    @php
+                        $itemTaxesAmount = $invoice->amount + array_sum($totalTax);
+                        $invoiceTaxesAmount = ($itemTaxesAmount * $invoice->invoiceTaxes->sum('value')) / 100;
+                        $totalTaxes = array_sum($totalTax) + $invoiceTaxesAmount;
+                    @endphp
+                    <td class="font-weight-bold">{{ __('messages.invoice.tax') . ':' }}</td>
+                    <td class="text-nowrap">
+                        {!! numberFormat($totalTaxes) != 0
+                            ? '<b class="euroCurrency">' . getInvoiceCurrencyAmount($totalTaxes, $invoice->currency_id, true) . '</b>'
+                            : __('messages.common.n/a') !!}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="font-weight-bold">{{ __('messages.invoice.total') . ':' }}</td>
+                    <td class="text-nowrap">
+                        <b
+                            class="euroCurrency">{{ getInvoiceCurrencyAmount($invoice->final_amount, $invoice->currency_id, true) }}</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="font-weight-bold">{{ __('messages.admin_dashboard.total_due') . ':' }}</td>
+                    <td class="text-nowrap" {{ $styleCss }}="color: red">
+                        <b
+                            class="euroCurrency">{{ getInvoiceCurrencyAmount(getInvoiceDueAmount($invoice->id), $invoice->currency_id, true) }}</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="font-weight-bold">{{ __('messages.admin_dashboard.total_paid') . ':' }}</td>
+                    <td class="text-nowrap" {{ $styleCss }}="color: green">
+                        <b
+                            class="euroCurrency">{{ getInvoiceCurrencyAmount(getInvoicePaidAmount($invoice->id), $invoice->currency_id, true) }}</b>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    </table>
+    <br><br><br><br><br>
+    <table class="w-100">
+        <tr>
+            <td>
+                <p class="font-weight-bold mt-2">{{ __('messages.client.notes') . ':' }}</p>
+                <p class="font-color-gray">{!! nl2br($invoice->note ?? __('messages.common.n/a')) !!}</p>
+            </td>
+        </tr>
+    </table>
+    <br>
+    <table class="w-100">
+        <tr>
+            <td>
+                <p class="font-weight-bold mt-2">{{ __('messages.invoice.terms') . ':' }}</p>
+                <p class="font-color-gray">{!! nl2br($invoice->term ?? __('messages.common.n/a')) !!}</p>
+            </td>
+        </tr>
+    </table>
 </body>
 
 </html>
