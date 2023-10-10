@@ -140,10 +140,10 @@
             @endphp
             
             <td class="number-align">
-                {{ isset($invoiceItems->previous_meter_count) ? $invoiceItems->previous_meter_count : __('messages.common.n/a') }}
+                {{ isset($previous_meter_count) ? $previous_meter_count : __('messages.common.n/a') }}
             </td>
             <td class="number-align">
-                {{ isset($invoiceItems->current_meter_count) ? $invoiceItems->current_meter_count : __('messages.common.n/a') }}
+                {{ isset($current_meter_count) ? $current_meter_count : __('messages.common.n/a') }}
             </td>
 
 By adding these columns to your invoice table and displaying the values in the rows, you should be able to include the previous_meter_count and current_meter_count in your generated invoice PDF. Make sure that the data is correctly loaded into the $invoice object from your database before rendering the PDF.
