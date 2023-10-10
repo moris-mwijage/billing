@@ -133,10 +133,10 @@
                     class="euroCurrency">{{ isset($invoiceItems->price) ? getInvoiceCurrencyAmount($invoiceItems->price, $invoice->currency_id, true) : __('messages.common.n/a') }}</b>
             </td>
             <td class="number-align"><b
-                    class="euroCurrency">{{ isset($invoiceItems->price) ? getInvoiceCurrencyAmount($invoiceItems->previous_meter_count, $invoice->currency_id, true) : __('messages.common.n/a') }}</b>
+                    class="euroCurrency">{{ isset($invoiceItems->previous_meter_count) ? getInvoiceCurrencyAmount($invoiceItems->previous_meter_count, $invoice->currency_id, true) : __('messages.common.n/a') }}</b>
             </td>
             <td class="number-align"><b
-                    class="euroCurrency">{{ isset($invoiceItems->price) ? getInvoiceCurrencyAmount($invoiceItems->current_meter_count, $invoice->currency_id, true) : __('messages.common.n/a') }}</b>
+                    class="euroCurrency">{{ isset($invoiceItems->current_meter_count) ? getInvoiceCurrencyAmount($invoiceItems->current_meter_count, $invoice->currency_id, true) : __('messages.common.n/a') }}</b>
             </td>
            
             <td class="number-align"><b
