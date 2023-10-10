@@ -35,6 +35,7 @@
         /* Adjust spacing for receipt content */
         .receipt-content p {
             margin: 2px 0;
+            word-wrap: break-word; /* Allow text to wrap within the width */
         }
     </style>
 </head>
