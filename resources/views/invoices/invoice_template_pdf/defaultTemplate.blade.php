@@ -135,8 +135,9 @@
             @php
                 $previous = App\Models\Invoice::where('invoice_id', $invoice->invoice_id)->get();
                 $current = App\Models\Invoice::where('invoice_id', $invoice->invoice_id)->get();
-                $previous_meter_count = $previous->previous_meter_count;
-                $current_meter_count = $current->current_meter_count;
+                dd($previous);
+                /* $previous_meter_count = $previous->previous_meter_count;
+                $current_meter_count = $current->current_meter_count; */
             @endphp
             
             <td class="number-align">
