@@ -15,10 +15,10 @@
             font-family: DejaVu Sans, Arial, "Helvetica", Arial, "Liberation Sans", sans-serif;
         }
 
-        /* Define A5 page size (148mm x 210mm) and margins */
+        /* Define 58mm page size (58mm width) */
         @page {
-            size: A5;
-            margin: 15mm 10mm 15mm 10mm;
+            size: 58mm 210mm; /* 58mm width, standard A4 height */
+            margin: 0; /* No margins for receipt paper */
         }
 
         @if (getInvoiceCurrencySymbol($invoice->currency_id) == '€')
@@ -28,6 +28,7 @@
         @endif
     </style>
 </head>
+
 
 
 <body>
