@@ -97,11 +97,13 @@
                             <th {{ $styleCss }}="border: 1px solid; padding: 5px;">
                                 {{ __('messages.product.product') }}</th>
                             <th class="number-align" {{ $styleCss }}="border: 1px solid; padding: 5px;">
-                                {{ __('messages.invoice.qty') }}</th>
+                                {{ __('Units') }}</th>
                             <th class="number-align" {{ $styleCss }}="border: 1px solid; padding: 5px;">
                                 {{ __('messages.product.unit_price') }}</th>
                             <th class="number-align" {{ $styleCss }}="border: 1px solid; padding: 5px;">
-                                {{ __('messages.invoice.tax') . ' (in %)' }}</th>
+                                {{ __('Previous Units') }}</th>
+                            <th class="number-align" {{ $styleCss }}="border: 1px solid; padding: 5px;">
+                            {{ __('Current Units') }}</th>
                             <th class="number-align" {{ $styleCss }}="border: 1px solid; padding: 5px;">
                                 {{ __('messages.invoice.amount') }}</th>
                         </tr>
@@ -130,14 +132,13 @@
             <td class="number-align"><b
                     class="euroCurrency">{{ isset($invoiceItems->price) ? getInvoiceCurrencyAmount($invoiceItems->price, $invoice->currency_id, true) : __('messages.common.n/a') }}</b>
             </td>
-            <td class="number-align">
-                @foreach ($invoiceItems->invoiceItemTax as $keys => $tax)
-                    {{ $tax->tax ?? __('messages.common.n/a') }}
-                    @if (!$loop->last)
-                        ,
-                    @endif
-                @endforeach
+            <td class="number-align"><b
+                    class="euroCurrency">{{ isset($invoiceItems->price) ? getInvoiceCurrencyAmount($invoiceItems->previous_meter_count, $invoice->currency_id, true) : __('messages.common.n/a') }}</b>
             </td>
+            <td class="number-align"><b
+                    class="euroCurrency">{{ isset($invoiceItems->price) ? getInvoiceCurrencyAmount($invoiceItems->current_meter_count, $invoice->currency_id, true) : __('messages.common.n/a') }}</b>
+            </td>
+           
             <td class="number-align"><b
                     class="euroCurrency">{{ isset($invoiceItems->total) ? getInvoiceCurrencyAmount($invoiceItems->total, $invoice->currency_id, true) : __('messages.common.n/a') }}</b>
             </td>
