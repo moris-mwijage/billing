@@ -133,11 +133,10 @@
                     class="euroCurrency">{{ isset($invoiceItems->price) ? getInvoiceCurrencyAmount($invoiceItems->price, $invoice->currency_id, true) : __('messages.common.n/a') }}</b>
             </td>
             @php
-                $previous = App\Models\Invoice::where('invoice_id', $invoice->invoice_id)->get();
-                $current = App\Models\Invoice::where('invoice_id', $invoice->invoice_id)->get();
-                dd($previous);
-                /* $previous_meter_count = $previous->previous_meter_count;
-                $current_meter_count = $current->current_meter_count; */
+                $previous = App\Models\Invoice::where('invoice_id', $invoice->invoice_id)->first();
+                $current = App\Models\Invoice::where('invoice_id', $invoice->invoice_id)->first();
+                $previous_meter_count = $previous->previous_meter_count;
+                $current_meter_count = $current->current_meter_count;
             @endphp
             
             <td class="number-align">
