@@ -15,6 +15,12 @@
             font-family: DejaVu Sans, Arial, "Helvetica", Arial, "Liberation Sans", sans-serif;
         }
 
+        /* Define A5 page size (148mm x 210mm) and margins */
+        @page {
+            size: A5;
+            margin: 15mm 10mm 15mm 10mm;
+        }
+
         @if (getInvoiceCurrencySymbol($invoice->currency_id) == '€')
             .euroCurrency {
                 font-family: Arial, "Helvetica", Arial, "Liberation Sans", sans-serif;
@@ -22,6 +28,7 @@
         @endif
     </style>
 </head>
+
 
 <body>
     @php $styleCss = 'style'; @endphp
