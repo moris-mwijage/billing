@@ -132,12 +132,15 @@
             <td class="number-align"><b
                     class="euroCurrency">{{ isset($invoiceItems->price) ? getInvoiceCurrencyAmount($invoiceItems->price, $invoice->currency_id, true) : __('messages.common.n/a') }}</b>
             </td>
-            <td class="number-align"><b
-                    class="euroCurrency">{{ isset($invoiceItems->previous_meter_count) ? getInvoiceCurrencyAmount($invoiceItems->previous_meter_count, $invoice->currency_id, true) : __('messages.common.n/a') }}</b>
+            <td class="number-align">
+                {{ isset($invoiceItems->previous_meter_count) ? $invoiceItems->previous_meter_count : __('messages.common.n/a') }}
             </td>
-            <td class="number-align"><b
-                    class="euroCurrency">{{ isset($invoiceItems->current_meter_count) ? getInvoiceCurrencyAmount($invoiceItems->current_meter_count, $invoice->currency_id, true) : __('messages.common.n/a') }}</b>
+            <td class="number-align">
+                {{ isset($invoiceItems->current_meter_count) ? $invoiceItems->current_meter_count : __('messages.common.n/a') }}
             </td>
+
+By adding these columns to your invoice table and displaying the values in the rows, you should be able to include the previous_meter_count and current_meter_count in your generated invoice PDF. Make sure that the data is correctly loaded into the $invoice object from your database before rendering the PDF.
+
            
             <td class="number-align"><b
                     class="euroCurrency">{{ isset($invoiceItems->total) ? getInvoiceCurrencyAmount($invoiceItems->total, $invoice->currency_id, true) : __('messages.common.n/a') }}</b>
