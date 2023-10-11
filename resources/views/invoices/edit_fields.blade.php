@@ -20,6 +20,22 @@
             {{ Form::select('status', $statusArr, isset($invoice) ? $invoice->status : null, ['class' => 'form-select io-select2', 'id' => 'status', 'required']) }}
         </div>
     </div>
+    <div class="col-lg-6 col-sm-12 mb-5">
+        {{ Form::label('previous_meter_count', __('messages.invoice.previous_meter_count') . ':', ['class' => 'form-label mb-3']) }}
+        {{ Form::number('previous_meter_count',$invoice->previous_meter_count, ['class' => 'form-control', 'id' => 'previous_meter_count', 'placeholder' => __('Provide previous meter count'), 'autocomplete' => 'off', 'min' => 1]) }}
+    </div>
+    
+    <!-- Add "Current Meter Count" Field -->
+    <div class="col-lg-6 col-sm-12 mb-5">
+        {{ Form::label('current_meter_count', __('messages.invoice.current_meter_count') . ':', ['class' => 'form-label mb-3']) }}
+        {{ Form::number('current_meter_count', $invoice->current_meter_count, ['class' => 'form-control', 'id' => 'current_meter_count', 'placeholder' => __('Provide current meter count'), 'autocomplete' => 'off', 'min' => 1]) }}
+    </div>
+
+    <div class="col-lg-6 col-sm-12 mb-5">
+        {{ Form::label('unit_used', __('messages.invoice.difference_count') . ':', ['class' => 'form-label mb-3']) }}
+        {{ Form::number('unit_used', $invoice->unit_used, ['class' => 'form-control', 'id' => 'unit_used', 'placeholder' => __('Provide unit used'), 'autocomplete' => 'off', 'min' => 1]) }}
+    </div>
+    
     <div class="col-lg-3 col-sm-12">
         <div class="mb-5">
             {{ Form::label('invoice_date', __('messages.invoice.invoice_date') . ':', ['class' => 'form-label required mb-3']) }}

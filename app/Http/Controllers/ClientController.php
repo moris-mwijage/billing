@@ -119,6 +119,7 @@ class ClientController extends AppBaseController
         }
 
         $clientTenant->delete();
+        $client->delete();
 
         return $this->sendSuccess(__('messages.flash.client_Deleted'));
     }
