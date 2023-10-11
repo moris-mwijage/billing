@@ -111,7 +111,7 @@ class ClientRepository extends BaseRepository
 
             $user->update($userInputs);
             $clientInputs = Arr::only($input,
-                ['website', 'postal_code', 'country_id', 'state_id', 'city_id', 'address', 'note']);
+                ['website', 'postal_code', 'country_id', 'state_id', 'city_id', 'address', 'note','meter_number']);
             $client->update($clientInputs);
 
             if (isset($input['profile']) && ! empty($input['profile'])) {

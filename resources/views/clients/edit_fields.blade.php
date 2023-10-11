@@ -65,13 +65,20 @@
             {{ Form::text('website', $client->website ?? null, ['class' => 'form-control form-control-solid website', 'placeholder' => __('messages.client.website')]) }}
         </div>
     </div>
+
+    <div class="col-lg-6">
+        <div class="mb-5">
+            {{ Form::label('meter_number', __('Client Meter Number') . ':', ['class' => 'form-label required mb-3']) }}
+            {{ Form::text('meter_number', $client->meter_number, ['class' => 'form-control form-control-solid meter-number', 'placeholder' => __('Client Meter Number'), 'required']) }}
+        </div>
+    </div>
     <div class="col-lg-6">
         <div class="mb-5">
             {{ Form::label('postal_code', __('messages.client.postal_code').':', ['class' => 'form-label required required mb-3']) }}
             {{ Form::text('postal_code', $client->postal_code ?? null, ['class' => 'form-control form-control-solid postal-code', 'placeholder' => __('messages.client.postal_code'), 'required',]) }}
         </div>
     </div>
-    <div class="col-lg-4">
+    <div class="col-lg-6">
         <div class="mb-5">
             {{ Form::label('country',__('messages.client.country').':', ['class' => 'form-label mb-3']) }}
             {{ Form::select('country_id', $countries, $client->country_id ?? null, ['id'=>'countryId','class' => 'form-select form-select-solid country','placeholder' => __('messages.client.country'), 'data-control' => 'select2']) }}

@@ -9,7 +9,7 @@
     </div>
     <div class="d-flex flex-column">
         <a href="{{route('clients.show', $row->client->id)}}"
-           class="mb-1 text-decoration-none">{{$row->full_name}}</a>
+           class="mb-1 text-decoration-none">{{$row->first_name}}</a>
         <span>{{$row->email}}</span>
     </div>
 </div>

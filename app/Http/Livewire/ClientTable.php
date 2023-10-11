@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
 use Rappasoft\LaravelLivewireTables\Views\Column;
 use Stancl\Tenancy\Database\TenantScope;
+use App\Models\Client;
 
 class ClientTable extends LivewireTableComponent
 {
@@ -68,11 +69,17 @@ class ClientTable extends LivewireTableComponent
                             'clientId' => $clientId,
                         ]);
                 }),
+            Column::make(__('Meter Number'), 'id')
+            ->format(function ($value, $row, Column $column) {
+                $clientTenant = Client::where('user_id',$row->id)->first();
+                return view('clients.components.meter_number',compact('clientTenant'));
+                      
+            }),
+
             Column::make(__('messages.common.action'), 'id')
                 ->format(function ($value, $row, Column $column) {
                     $clientTenant = $row->clients()->where('tenant_id', getLogInUser()->tenant_id)->first();
                     $clientId = $clientTenant->client_id;
-
                     return view('livewire.action-button')
                         ->withValue([
                             'edit-route' => route('clients.edit', $clientId),

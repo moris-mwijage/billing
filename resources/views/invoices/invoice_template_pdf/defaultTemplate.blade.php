@@ -42,14 +42,14 @@
             <tr>
                 <td colspan="2" class="vertical-align-top" width="200px">
                     <strong class="from-font-size">{{ __('messages.common.from') }} </strong><br>
-                    {{ html_entity_decode($setting['app_name']) }}<br>
+                    Chiwala Family<br>
                     <b>{{ __('messages.common.address') . ':' }}&nbsp;</b>{!! $setting['company_address'] !!}<br>
                     @if (isset($setting['show_additional_address_in_invoice']) && $setting['show_additional_address_in_invoice'] == 1)
                         <div>
                             {{ $setting['country'] . ', ' . $setting['state'] . ', ' . $setting['city'] . ', ' . $setting['zipcode'] . '.' }}
                         </div>
                     @endif
-                    <b>{{ __('messages.user.phone') . ':' }}&nbsp;</b>{{ $setting['company_phone'] }}<br>
+                    <b>{{ __('messages.user.phone') . ':' }}&nbsp;</b>{{ +255749888890 }}<br>
                     @if (isset($setting['show_additional_address_in_invoice']) && $setting['show_additional_address_in_invoice'] == 1)
                         <div><b>{{ __('messages.invoice.fax_no') . ':' }}&nbsp;</b>{{ $setting['fax_no'] }}</div>
                     @endif
@@ -65,7 +65,7 @@
                 <td style="width: 70%">
                     <strong class="from-font-size">{{ __('messages.common.to') }} </strong><br>
                     <b>{{ __('messages.common.name') . ':' }}&nbsp;</b>{{ $client->user->full_name }}<br>
-                    <b>{{ __('messages.common.email') . ':' }}&nbsp;</b>{{ $client->user->email }}<br>
+                    <b>{{ __('messages.common.email') . ':' }}&nbsp;</b>{{ $client->user->contact }}<br>
                     @if (!empty($client->address))
                         <b>{{ __('messages.common.address') . ':' }}&nbsp;</b>{{ $client->address }}
                     @endif
