@@ -42,7 +42,7 @@
             <tr>
                 <td colspan="2" class="vertical-align-top" width="200px">
                     <strong class="from-font-size">{{ __('messages.common.from') }} </strong><br>
-                    Chiwala Family<br>
+                    {{ html_entity_decode($setting['app_name']) }}<br>
                     <b>{{ __('messages.common.address') . ':' }}&nbsp;</b>{!! $setting['company_address'] !!}<br>
                     @if (isset($setting['show_additional_address_in_invoice']) && $setting['show_additional_address_in_invoice'] == 1)
                         <div>
