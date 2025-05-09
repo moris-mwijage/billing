@@ -73,7 +73,7 @@ class ClientTable extends LivewireTableComponent
             ->format(function ($value, $row, Column $column) {
                 $clientTenant = Client::where('user_id',$row->id)->first();
                 return view('clients.components.meter_number',compact('clientTenant'));
-                      
+
             }),
 
             Column::make(__('messages.common.action'), 'id')

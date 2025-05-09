@@ -243,14 +243,14 @@ if (! function_exists('getLogoUrl')) {
      */
     function getLogoUrl($tenantId = null)
     {
-        static $appLogo;
+        static $appLogo, $setting, $userSetting;
+
 
         $img = 'assets/images/infyom.png';
 
         if (empty($appLogo)) {
             if (isAuth() && Auth::user()->hasRole(Role::ROLE_CLIENT)) {
                 /** @var Setting $setting */
-                static $setting;
                 if ($setting === null) {
                     $setting = Setting::where('tenant_id', getClientAdminTenantId())->where('key', '=', 'app_logo')->first();
                     $userSetting = UserSetting::toBase()->pluck('value', 'key')->toArray();
@@ -263,8 +263,6 @@ if (! function_exists('getLogoUrl')) {
             } else {
                 if (isAuth() && Auth::user()->hasRole(Role::ROLE_ADMIN)) {
                     /** @var Setting $setting */
-                    static $setting;
-                    static $userSetting;
                     if ($setting === null) {
                         $setting = Setting::where('tenant_id', Auth::user()->tenant_id)->where('key', '=', 'app_logo')->first();
                         $userSetting = UserSetting::toBase()->pluck('value', 'key')->toArray();
@@ -294,14 +292,13 @@ if (! function_exists('getFaviconUrl')) {
      */
     function getFaviconUrl($tenantId = null)
     {
-        static $appLogo;
+        static $appLogo, $setting, $userSetting;
 
         $img = 'assets/images/infyom.png';
 
         if (empty($appLogo)) {
             if (isAuth() && Auth::user()->hasRole(Role::ROLE_CLIENT)) {
                 /** @var Setting $setting */
-                static $setting;
                 if ($setting === null) {
                     $setting = Setting::where('tenant_id', getClientAdminTenantId())->where('key', '=', 'favicon_icon')->first();
                     $userSetting = UserSetting::toBase()->pluck('value', 'key')->toArray();
@@ -314,8 +311,6 @@ if (! function_exists('getFaviconUrl')) {
             } else {
                 if (isAuth() && Auth::user()->hasRole(Role::ROLE_ADMIN)) {
                     /** @var Setting $setting */
-                    static $setting;
-                    static $userSetting;
                     if ($setting === null) {
                         $setting = Setting::where('tenant_id', Auth::user()->tenant_id)->where('key', '=', 'favicon_icon')->first();
                         $userSetting = UserSetting::toBase()->pluck('value', 'key')->toArray();

@@ -6,6 +6,7 @@
 -- Generation Time: Aug 24, 2023 at 01:20 PM
 -- Server version: 8.0.33
 -- PHP Version: 8.1.19
+USE production;
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
