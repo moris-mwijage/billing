@@ -26,8 +26,9 @@ class LandingScreenController extends Controller
         $this->subscriptionPlanRepository = $subscriptionPlanRepo;
     }
 
-    public function index(): View
+    public function index(): View|RedirectResponse
     {
+        return redirect()->route('login');
         $data['sectionOne'] = SectionOne::with('media')->first();
         $data['sectionTwo'] = SectionTwo::first();
         $data['sectionThree'] = SectionThree::with('media')->first();
