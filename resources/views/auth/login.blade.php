@@ -8,9 +8,9 @@
     @endphp
     <div class="d-flex flex-column flex-column-fluid align-items-center justify-content-center p-4">
         <div class="col-12 text-center">
-            <a href="{{ url('/') }}" class="image mb-7 mb-sm-10 image-medium">
+            {{-- <a href="{{ url('/') }}" class="image mb-7 mb-sm-10 image-medium">
                 <img alt="Logo" src="{{asset($settingValue['app_logo']['value']) }}" class="img-fluid object-contain">
-            </a>
+            </a> --}}
         </div>
         <div class="width-540">
             @include('flash::message')

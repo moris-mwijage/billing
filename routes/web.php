@@ -47,7 +47,8 @@ require __DIR__.'/auth.php';
 
 Route::middleware(['xss'])->group(function () {
     Route::get('/', function () {
-        return redirect(route('landing.home'));
+        return redirect(route('login'));
+       // return redirect(route('landing.home'));
     });
 
     Route::post('update-language', [UserController::class, 'updateLanguage'])->name('change-language');
