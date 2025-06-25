@@ -103,7 +103,7 @@ class ClientRepository extends BaseRepository
         try {
             DB::beginTransaction();
             $user = User::withoutGlobalScope(new TenantScope())->whereId($client->user_id)->first();
-            $userInputs = Arr::only($input, ['first_name', 'last_name', 'email', 'contact', 'region_code']);
+            $userInputs = Arr::only($input, ['first_name', 'last_name', 'email', 'contact', 'region_code','meter_number']);
 
             if (! empty($input['password'])) {
                 $userInputs['password'] = Hash::make($input['password']);
