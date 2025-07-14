@@ -20,6 +20,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Illuminate\Support\Facades\Log;
 
 class AdminPaymentController extends AppBaseController
 {
@@ -43,6 +44,7 @@ class AdminPaymentController extends AppBaseController
     public function store(CreateAdminPaymentRequest $request)
     {
         $input = $request->all();
+        Log::debug('Payment request data:', $request->all()); // Logs to storage/logs/laravel.log
 
         try {
             $payment = $this->adminPaymentRepository->store($input);
@@ -53,6 +55,21 @@ class AdminPaymentController extends AppBaseController
         return $this->sendResponse($payment, __('messages.flash.payment_saved'));
     }
 
+    // public function edit($paymentId)
+    // {
+    //     $payment = AdminPayment::whereId($paymentId)->whereTenantId(Auth::user()->tenant_id)->first();
+    //     if (! $payment) {
+    //         return $this->sendError('Seems, you are not allowed to access this record.');
+    //     }
+
+    //     $invoiceId = $payment->invoice->id;
+    //     $payment['currencyCode'] = getInvoiceCurrencySymbol($payment->invoice->currency_id);
+    //     $payment['payment_mode'] = (string) $payment->payment_mode;
+    //     $payment['invoice'] = $payment->invoice->invoice_id;
+    //     $payment['DueAmount'] = $this->getInvoiceDueAmount($invoiceId);
+
+    //     return $this->sendResponse($payment, __('messages.flash.payment_retrieved'));
+    // }
     public function edit($paymentId)
     {
         $payment = AdminPayment::whereId($paymentId)->whereTenantId(Auth::user()->tenant_id)->first();
@@ -62,8 +79,12 @@ class AdminPaymentController extends AppBaseController
 
         $invoiceId = $payment->invoice->id;
         $payment['currencyCode'] = getInvoiceCurrencySymbol($payment->invoice->currency_id);
+        $payment['payment_mode'] = (string) $payment->payment_mode; // Ensure it's a string
         $payment['invoice'] = $payment->invoice->invoice_id;
         $payment['DueAmount'] = $this->getInvoiceDueAmount($invoiceId);
+
+        // Debug: Log payment_mode to Laravel logs
+        \Log::info('Payment Mode:', ['mode' => $payment['payment_mode']]);
 
         return $this->sendResponse($payment, __('messages.flash.payment_retrieved'));
     }

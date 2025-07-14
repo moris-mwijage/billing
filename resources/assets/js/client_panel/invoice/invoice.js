@@ -3,7 +3,7 @@ document.addEventListener('turbo:load', loadCPInvoice);
 function loadCPInvoice() {
     initializeSelect2CPInvoice()
     initializeSelect2Payment()
-    
+
     // resetModalForm('#clientPaymentForm', '#error');
     $('.amount').hide();
     let paymentMode = 1;
@@ -174,7 +174,7 @@ listenSubmit('#clientPaymentForm', function (e) {
                 'invoiceId': payloadData.invoiceId,
                 'notes': payloadData.notes,
             },
-            success: function (result) {    
+            success: function (result) {
                 if (result.status == 'CREATED') {
                     let redirectTo = '';
 

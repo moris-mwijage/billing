@@ -157,6 +157,8 @@ function paymentRenderData(paymentId) {
             if (result.success) {
                 $("#edit_invoice_id").val(result.data.invoice.invoice_id);
                 $("#edit_amount").val(result.data.amount);
+                $('#edit_payment_mode').val(String(result.data.payment_mode)).trigger('change');
+
                 $("#edit_payment_date").flatpickr({
                     defaultDate: result.data.payment_date,
                     dateFormat: currentDateFormat,
@@ -178,6 +180,9 @@ function paymentRenderData(paymentId) {
                         result.data.DueAmount.original.data.totalPaidAmount
                     )
                 );
+                console.log("payment_mode from AJAX:", result.data.payment_mode);
+                console.log("All options:", $('#edit_payment_mode option').map((i, el) => $(el).val()).get());
+                $('#edit_payment_mode').val(result.data.payment_mode).trigger('change');
                 $("#editPaymentModal").appendTo("body").modal("show");
             }
         },

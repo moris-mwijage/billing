@@ -122,6 +122,10 @@ class Payment extends Model implements HasMedia
     const CASH = 4;
 
     const RAZORPAY = 5;
+    const CRDB = 6;
+    const NMB = 7;
+
+
 
     const PAYMENT_MODE = [
         self::MANUAL => 'Manual',
@@ -129,6 +133,8 @@ class Payment extends Model implements HasMedia
         self::PAYPAL => 'Paypal',
         self::CASH => 'Cash',
         self::RAZORPAY => 'Razorpay',
+        self::CRDB => 'CRDB',
+        self::NMB => 'NMB',
     ];
 
     const PENDING = 0;

@@ -1,3 +1,11 @@
+@php
+    $paymentModes = [
+        \App\Models\Payment::CASH => 'Cash',
+        \App\Models\Payment::CRDB => 'CRDB',
+        \App\Models\Payment::NMB => 'NMB',
+    ];
+@endphp
+
 <div id="editPaymentModal" class="modal fade" role="dialog" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <!-- Modal content-->
@@ -56,8 +64,10 @@
                     </div>
                     </div>
                     <div class="form-group col-lg-4 col-sm-12 mb-5">
-                        {{ Form::label('payment_mode',__('messages.payment.payment_mode').':', ['class' => 'form-label required mb-3']) }} 
-                        {{ Form::text('payment_mode','Cash',['id'=>'edit_payment_mode','readonly','class' => 'form-control form-control-solid ']) }}
+                        {{ Form::label('payment_mode', __('messages.payment.payment_mode') . ':', ['class' => 'form-label required mb-3']) }}
+
+                        {{ Form::text('payment_mode', null, ['class' => 'form-control form-control-solid ', 'id' => 'edit_payment_mode','placeholder'=>__('messages.payment.payment_date'), 'autocomplete' => 'off','required','data-focus'=>"false"]) }}
+
                     </div>
                     <div class="form-group col-sm-12 mb-5">
                         {{ Form::label('notes',__('messages.invoice.note').':', ['class' => 'form-label required fs-6 text-gray-700 mb-3']) }}

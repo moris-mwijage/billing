@@ -97,12 +97,22 @@ class AdminPaymentTable extends LivewireTableComponent
                 }),
 
             Column::make(__('messages.invoice.payment_method'), 'payment_mode')
-                ->sortable()
-                ->searchable()
-                ->label(function ($row, Column $column) {
-                    return  ($row->payment_mode == 4) ? '<span class="badge bg-light-info fs-7">Cash</span>' : '';
-                })
-                 ->html(),
+            ->sortable()
+            ->searchable()
+            ->label(function ($row, Column $column) {
+                switch ($row->payment_mode) {
+                    case \App\Models\Payment::CASH:
+                        return '<span class="badge bg-light-info fs-7">Cash</span>';
+                    case \App\Models\Payment::CRDB:
+                        return '<span class="badge bg-light-success fs-7">CRDB</span>';
+                    case \App\Models\Payment::NMB:
+                        return '<span class="badge bg-light-warning fs-7">NMB</span>';
+                    default:
+                        return '<span class="badge bg-light-secondary fs-7">Unknown</span>';
+                }
+            })
+            ->html(),
+
             Column::make(__('messages.common.action'), 'id')
                 ->format(function ($value, $row, Column $column) {
                     return view('livewire.modal-action-button')
